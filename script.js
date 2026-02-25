@@ -108,17 +108,32 @@ function generateKanaIndices(prng, poolSize) {
     let attempts = 0;
 
     do {
-      candidate = Math.floor(prng() * poolSize);
       attempts++;
       if (attempts > 1000) break;
-    } while (
-      counts[candidate] >= 2 ||
-      (i > 0 && candidate === result[i - 1])
-    );
+
+      // --- Build weighted pool ---
+      const weighted = [];
+
+      for (let k = 0; k < poolSize; k++) {
+        if (counts[k] >= 2) continue;               // max 2 rule
+        if (i > 0 && k === result[i - 1]) continue; // no repeat rule
+
+        // Weight: kana with fewer counts get more weight
+        const weight = (2 - counts[k]) + 1; // counts 0→3, 1→2, 2→skip
+        for (let w = 0; w < weight; w++) {
+          weighted.push(k);
+        }
+      }
+
+      // Pick from weighted pool
+      candidate = weighted[Math.floor(prng() * weighted.length)];
+
+    } while (candidate === undefined);
 
     counts[candidate]++;
     result.push(candidate);
   }
+
   return result;
 }
 
