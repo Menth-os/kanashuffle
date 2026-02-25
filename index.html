@@ -44,10 +44,10 @@
       <!-- SETTINGS CARD -->
       <div class="settings-card p-3 p-md-4 mb-4">
 
-        <div class="row g-3 align-items-end flex-nowrap overflow-auto pb-1">
+        <div class="row g-3 align-items-end pb-1">
 
           <!-- Kana type -->
-          <div class="col-auto">
+          <div class="col-9 col-md-auto">
             <label for="kanaType" class="form-label mb-1">Kana type</label>
             <select id="kanaType" class="form-select form-select-sm">
               <option value="hiragana">Hiragana</option>
@@ -56,7 +56,7 @@
           </div>
 
           <!-- Dakuten switch -->
-          <div class="col-auto">
+          <div class="col-3 col-md-auto">
             <label class="form-label mb-1">Dakuten</label>
             <div class="form-check form-switch m-0">
               <input class="form-check-input" type="checkbox" id="chkDakuten">
@@ -64,7 +64,7 @@
           </div>
 
           <!-- Font -->
-          <div class="col-auto">
+          <div class="col-12 col-md-auto">
             <label for="fontSelect" class="form-label mb-1">Font</label>
             <select id="fontSelect" class="form-select form-select-sm">
               <option value="Noto Sans JP" selected>Noto Sans JP</option>
@@ -75,7 +75,7 @@
           </div>
 
           <!-- Seed -->
-          <div class="col">
+          <div class="col-12 col-md">
             <label for="seedInput" class="form-label mb-1">Seed (a–z, 0–9)</label>
             <div class="input-group input-group-sm">
               <input type="text" id="seedInput" class="form-control seed-input"
@@ -87,7 +87,7 @@
           </div>
 
           <!-- Buttons -->
-          <div class="col-auto d-flex align-items-end">
+          <div class="col-12 col-md-auto d-flex align-items-end">
             <div class="d-flex gap-2 flex-nowrap">
               <button id="btnGenerate" class="btn btn-sm btn-secondary">
                 <i class="fa-solid fa-shuffle me-1"></i> Regenerate
