@@ -40,6 +40,63 @@ const romaji = [
 
 const GRID_SIZE = 50;
 
+// -------------------- Dakuten / Handakuten Builder --------------------
+function buildExtendedKana(baseKana, baseRomaji) {
+  const dakutenMap = {
+    // Hiragana
+    "か":"が","き":"ぎ","く":"ぐ","け":"げ","こ":"ご",
+    "さ":"ざ","し":"じ","す":"ず","せ":"ぜ","そ":"ぞ",
+    "た":"だ","ち":"ぢ","つ":"づ","て":"で","と":"ど",
+    "は":"ば","ひ":"び","ふ":"ぶ","へ":"べ","ほ":"ぼ",
+
+    // Katakana
+    "カ":"ガ","キ":"ギ","ク":"グ","ケ":"ゲ","コ":"ゴ",
+    "サ":"ザ","シ":"ジ","ス":"ズ","セ":"ゼ","ソ":"ゾ",
+    "タ":"ダ","チ":"ヂ","ツ":"ヅ","テ":"デ","ト":"ド",
+    "ハ":"バ","ヒ":"ビ","フ":"ブ","ヘ":"ベ","ホ":"ボ"
+  };
+
+  const handakutenMap = {
+    // Hiragana
+    "は":"ぱ","ひ":"ぴ","ふ":"ぷ","へ":"ぺ","ほ":"ぽ",
+
+    // Katakana
+    "ハ":"パ","ヒ":"ピ","フ":"プ","ヘ":"ペ","ホ":"ポ"
+  };
+
+  const extendedKana = [...baseKana];
+  const extendedRomaji = [...baseRomaji];
+
+  baseKana.forEach((kana, i) => {
+    const baseR = baseRomaji[i];
+
+    // Dakuten
+    if (dakutenMap[kana]) {
+      extendedKana.push(dakutenMap[kana]);
+
+      let r = baseR;
+      if (r.startsWith("h")) r = "b" + r.slice(1);
+      if (r === "shi") r = "ji";
+      if (r === "chi") r = "ji";
+      if (r === "tsu") r = "zu";
+
+      extendedRomaji.push(r);
+    }
+
+    // Handakuten
+    if (handakutenMap[kana]) {
+      extendedKana.push(handakutenMap[kana]);
+
+      let r = baseR;
+      if (r.startsWith("h")) r = "p" + r.slice(1);
+
+      extendedRomaji.push(r);
+    }
+  });
+
+  return { extendedKana, extendedRomaji };
+}
+
 // -------------------- Seeded PRNG --------------------
 function hashStringToUint32(str) {
   let h = 2166136261 >>> 0;
@@ -111,21 +168,18 @@ function generateKanaIndices(prng, poolSize) {
       attempts++;
       if (attempts > 1000) break;
 
-      // --- Build weighted pool ---
       const weighted = [];
 
       for (let k = 0; k < poolSize; k++) {
-        if (counts[k] >= 2) continue;               // max 2 rule
-        if (i > 0 && k === result[i - 1]) continue; // no repeat rule
+        if (counts[k] >= 2) continue;
+        if (i > 0 && k === result[i - 1]) continue;
 
-        // Weight: kana with fewer counts get more weight
-        const weight = (2 - counts[k]) + 1; // counts 0→3, 1→2, 2→skip
+        const weight = (2 - counts[k]) + 1;
         for (let w = 0; w < weight; w++) {
           weighted.push(k);
         }
       }
 
-      // Pick from weighted pool
       candidate = weighted[Math.floor(prng() * weighted.length)];
 
     } while (candidate === undefined);
@@ -141,7 +195,20 @@ function renderKanaGrid(type, seed) {
   const container = document.getElementById("kanaTableBody");
   container.innerHTML = "";
 
-  const kanaSet = type === "katakana" ? katakana : hiragana;
+  const baseKana = type === "katakana" ? katakana : hiragana;
+  const baseRomaji = romaji;
+
+  const includeDakuten = document.getElementById("chkDakuten").checked;
+
+  let kanaSet = baseKana;
+  let romajiSet = baseRomaji;
+
+  if (includeDakuten) {
+    const ext = buildExtendedKana(baseKana, baseRomaji);
+    kanaSet = ext.extendedKana;
+    romajiSet = ext.extendedRomaji;
+  }
+
   const prng = createPRNG(seed);
   const indices = generateKanaIndices(prng, kanaSet.length);
 
@@ -159,7 +226,7 @@ function renderKanaGrid(type, seed) {
 
     const spanRomaji = document.createElement("span");
     spanRomaji.className = "kana-romaji";
-    spanRomaji.textContent = romaji[idx];
+    spanRomaji.textContent = romajiSet[idx];
 
     cell.appendChild(spanKana);
     cell.appendChild(spanRomaji);
@@ -225,6 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnPlayPause = document.getElementById("btnPlayPause");
   const btnReset = document.getElementById("btnReset");
   const btnClearSeed = document.getElementById("btnClearSeed");
+  const chkDakuten = document.getElementById("chkDakuten");
   const kanaCard = document.querySelector(".kana-card");
 
   // URL params
@@ -258,6 +326,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Change type
   kanaTypeSelect.addEventListener("change", () => {
+    const type = kanaTypeSelect.value;
+    const cleaned = sanitizeSeed(seedInput.value);
+    renderKanaGrid(type, cleaned || getDefaultDailySeed());
+
+    document.querySelectorAll(".kana-char").forEach(el => {
+      el.style.fontFamily = `"${fontSelect.value}"`;
+    });
+  });
+
+  // Dakuten toggle
+  chkDakuten.addEventListener("change", () => {
     const type = kanaTypeSelect.value;
     const cleaned = sanitizeSeed(seedInput.value);
     renderKanaGrid(type, cleaned || getDefaultDailySeed());

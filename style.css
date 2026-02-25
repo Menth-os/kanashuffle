@@ -130,6 +130,21 @@ header.sticky-header {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.form-switch {
+  height: 31px;
+}
+
+.form-switch .form-check-input {
+  transform: scale(1.4);
+  transform-origin: left top;
+}
+
+.form-switch {
+  padding-left: 2.2rem;
+  margin-top: 0.2rem;
+}
+
+
 @media (max-width: 767.98px) {
   .timer-display {
     font-size: 1.3rem;
