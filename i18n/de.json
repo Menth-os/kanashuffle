@@ -2,8 +2,9 @@
   "title": "Kana Shuffle",
   "shuffle": "Mischen",
   "romaji": "Romaji",
+  "numbers": "Nummern",
   "copyLink": "Link kopieren",
-  "shortcutsHTML": "Shortcuts: <kbd>M</kbd> romaji, <kbd>Leertaste</kbd> Timer",
+  "shortcutsHTML": "Shortcuts: <kbd>M</kbd> romaji, <kbd>#</kbd> Nummern, <kbd>Leertaste</kbd> Timer",
   "tip": "Tipp: Seed für wiederholbare Sessions nutzen oder leer lassen für „heute“.",
   "settings": "Einstellungen",
   "language": "Sprache",
@@ -12,6 +13,10 @@
   "katakana": "Katakana",
   "dakutenTitle": "Dakuten / Handakuten",
   "dakutenDesc": "Fügt z. B. が / ぱ hinzu (wo möglich)",
+  "timerTitle": "Timer (mm:ss)",
+  "timerReset": "Auf 1:00 zurücksetzen",
+  "gauntletTitle": "Gauntlet-Modus",
+  "gauntletDesc": "Erzeugt endlos Kana",
   "rowsTitle": "Zeilen (Multi-Select)",
   "rowsDesc": "Eine oder mehrere wählen. Wenn nichts gewählt ist, gilt „Alle“.",
   "rowsAll": "Alle",
@@ -35,5 +40,9 @@
   "toastShuffled": "Neu gemischt.",
   "toastLinkCopied": "Link kopiert.",
   "toastClipboardBlocked": "Zwischenablage vom Browser blockiert.",
-  "toastTime": "Zeit!"
+  "toastTime": "Zeit!",
+  "timesUpTitle": "Zeit ist um!",
+  "timesUpBody": "Guter Run. Nochmal?",
+  "timesUpNext": "Nächster Run",
+  "timesUpClose": "Nicht jetzt"
 }

@@ -2,8 +2,9 @@
   "title": "かなシャッフル",
   "shuffle": "シャッフル",
   "romaji": "ローマ字",
+  "numbers": "番号",
   "copyLink": "リンク",
-  "shortcutsHTML": "ショートカット: <kbd>M</kbd> ローマ字 / <kbd>Space</kbd> タイマー",
+  "shortcutsHTML": "ショートカット: <kbd>M</kbd> ローマ字 / <kbd>#</kbd> 番号 / <kbd>Space</kbd> タイマー",
   "tip": "ヒント: Seed で同じ並びを再現。空なら「今日」です。",
   "settings": "設定",
   "language": "言語",
@@ -12,6 +13,10 @@
   "katakana": "カタカナ",
   "dakutenTitle": "濁点・半濁点",
   "dakutenDesc": "可能なら「が」「ぱ」などを追加",
+  "timerTitle": "タイマー（分:秒）",
+  "timerReset": "1:00に戻す",
+  "gauntletTitle": "ガントレットモード",
+  "gauntletDesc": "かなを無限に生成します",
   "rowsTitle": "行（複数選択）",
   "rowsDesc": "1つ以上選択。未選択なら「全部」。",
   "rowsAll": "全部",
@@ -35,5 +40,9 @@
   "toastShuffled": "シャッフルしました。",
   "toastLinkCopied": "リンクをコピーしました。",
   "toastClipboardBlocked": "クリップボードが使えません。",
-  "toastTime": "時間！"
+  "toastTime": "時間！",
+  "timesUpTitle": "時間です！",
+  "timesUpBody": "いい感じ。もう一回いく？",
+  "timesUpNext": "次のラン",
+  "timesUpClose": "あとで"
 }
