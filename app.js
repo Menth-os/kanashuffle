@@ -170,6 +170,9 @@ function extendWithDakuten(kanaArr, romajiArr) {
       if (rr === "shi") rr = "ji";
       if (rr === "chi") rr = "ji";
       if (rr === "tsu") rr = "zu";
+      if (rr.startsWith("k")) rr = "g" + rr.slice(1);
+      if (rr.startsWith("s")) rr = "z" + rr.slice(1);
+      if (rr.startsWith("t")) rr = "d" + rr.slice(1);
       romaji.push(rr);
     }
     if (MAPS.handakuten[k]) {
